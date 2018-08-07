@@ -1,14 +1,3 @@
-#' The zipRadius Function
-#'
-#' @import zipcode
-#' @import magrittr
-#' @importFrom geosphere distHaversine
-#' @importFrom dplyr filter, select, rename
-#' @param zipcode the reference zip code of which you'd like the list of zip codes within a give radius as character
-#' @param radius the distance in miles from the center of the given zip to the center of the other zips as numeric
-#' @export zipRadius
-#' @example zipRadius("30316", 10)
-#'
 library(zipcode)
 library(geosphere)
 library(magrittr)
@@ -16,8 +5,17 @@ library(dplyr)
 
 data(zipcode)
 zipList <- zipcode
-rm(zipcode)
 
+#' The zipRadius Function
+#'
+#' @import zipcode
+#' @import magrittr
+#' @importFrom geosphere distHaversine
+#' @importFrom dplyr filter select rename
+#' @param zipcode the reference zip code of which you'd like the list of zip codes within a give radius as character
+#' @param radius the distance in miles from the center of the given zip to the center of the other zips as numeric
+#' @examples zipRadius("30316", 10)
+#'@export
 zipRadius <- function(zipcode, radius){
 
   # Get the lat/lon of the reference zip
