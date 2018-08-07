@@ -4,11 +4,12 @@ Title: Creates a Data Frame of Zip Codes in a Given Radius from a Given US Zip C
 Version: 0.1.0
 Author: Stephen Ewing <stephenewing1337@gmail.com>
 Maintainer: Stephen Ewing <stephenewing1337@gmail.com>
+Imports: dplyr, geosphere, magrittr, testthat
 Description: This is a package for a simple script that will generate a data frame of US zip codes and their
     distance to the given zip code when given a starting zip code and a radius in miles.
-License: GNU General Public License v3.0
+License: LICENSE.txt
 Encoding: UTF-8
-LazyData: true
+LazyData: false
 RoxygenNote: 6.1.0
 Suggests: knitr,
     rmarkdown

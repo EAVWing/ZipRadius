@@ -2,7 +2,6 @@
 
 export(zipRadius)
 import(magrittr)
-import(zipcode)
 importFrom(dplyr,filter)
 importFrom(dplyr,rename)
 importFrom(dplyr,select)
