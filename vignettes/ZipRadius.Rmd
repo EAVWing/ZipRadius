@@ -19,49 +19,8 @@ knitr::opts_chunk$set(
 This package does one thing well.  If you give it a zip code and a radius in miles it returns a data frame containing all of the zip codes that have a center point within the distance specified by the radius.
 
 For example:
-```{r, include=FALSE}
-library(geosphere)
-library(magrittr)
-library(dplyr)
 
-
-#' The zipRadius Function
-#'
-#' @import magrittr
-#' @importFrom geosphere distHaversine
-#' @importFrom dplyr filter select rename
-#' @param zipcode the reference zip code of which you'd like the list of zip codes within a give radius as character
-#' @param radius the distance in miles from the center of the given zip to the center of the other zips as numeric
-#' @examples zipRadius("30316", 10)
-#'@export
-zipRadius <- function(zipcode, radius){
-  # Get the lat/lon of the reference zip
-  refPoint <- dplyr::filter(zipList, zip == zipcode) %>%
-    dplyr::select(latitude, longitude) %>%
-    dplyr::rename(refLat = latitude, refLon = longitude)
-
-  # Add the lat/lon of the ref zip to the zipList
-  zipList <- cbind(zipList, refPoint)
-
-  # Radius of Earth in miles to adjust for km
-  r = 3959
-
-  # Creating Table of the coordinates. Makes it easy to calc distance
-  Points1 <- cbind(zipList$longitude,zipList$latitude)
-  Points2 <- cbind(zipList$refLon,zipList$refLat)
-  distance <- distHaversine(Points1,Points2,r)
-
-  # Adding distance back on to the original zipList
-  zipList$Distance <- round(distance, 2)
-
-  # Remove reference lat/lon and filter down to below selected radius
-  zipList <- dplyr::select(zipList, -refLat, -refLon) %>%
-    dplyr::filter(distance < radius)
-
-  return(zipList)
-  }
-```
-```{r, warning=FALSE}
+```{r, eval=FALSE}
 test <- zipRadius("30316", 10)
 head(test)
 ```
