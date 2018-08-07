@@ -1,11 +1,3 @@
-library(zipcode)
-library(geosphere)
-library(magrittr)
-library(dplyr)
-
-data(zipcode)
-zipList <- zipcode
-
 #' The zipRadius Function
 #'
 #' @import zipcode
@@ -17,6 +9,13 @@ zipList <- zipcode
 #' @examples zipRadius("30316", 10)
 #'@export
 zipRadius <- function(zipcode, radius){
+  library(zipcode)
+  library(geosphere)
+  library(magrittr)
+  library(dplyr)
+
+  data(zipcode)
+  zipList <- zipcode
 
   # Get the lat/lon of the reference zip
   refPoint <- dplyr::filter(zipList, zip == zipcode) %>%
