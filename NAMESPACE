@@ -2,7 +2,10 @@
 
 export(zipRadius)
 import(magrittr)
+importFrom(dplyr,"%>%")
 importFrom(dplyr,filter)
 importFrom(dplyr,rename)
 importFrom(dplyr,select)
 importFrom(geosphere,distHaversine)
+importFrom(rlang,.data)
+importFrom(utils,zip)
