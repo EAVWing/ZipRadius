@@ -16,50 +16,49 @@ knitr::opts_chunk$set(
 )
 ```
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+This package does one thing well.  If you give it a zip code and a radius in miles it returns a data frame containing all of the zip codes that have a center point within the distance specified by the radius.
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+For example:
+```{r, include=FALSE}
+library(zipcode)
+library(geosphere)
+library(magrittr)
+library(dplyr)
 
-## Vignette Info
+data(zipcode)
+zipList <- zipcode
+rm(zipcode)
 
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+zipRadius <- function(zipcode, radius){
 
-## Styles
+  # Get the lat/lon of the reference zip
+  refPoint <- dplyr::filter(zipList, zip == zipcode) %>%
+    dplyr::select(latitude, longitude) %>%
+    dplyr::rename(refLat = latitude, refLon = longitude)
 
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
+  # Add the lat/lon of the ref zip to the zipList
+  zipList <- cbind(zipList, refPoint)
 
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
+  # Radius of Earth in miles to adjust for km
+  r = 3959
 
-## Figures
+  # Creating Table of the coordinates. Makes it easy to calc distance
+  Points1 <- cbind(zipList$longitude,zipList$latitude)
+  Points2 <- cbind(zipList$refLon,zipList$refLat)
+  distance <- distHaversine(Points1,Points2,r)
 
-The figure sizes have been customised so that you can easily put two images side-by-side. 
+  # Adding distance back on to the original zipList
+  zipList$Distance <- round(distance, 2)
 
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+  # Remove reference lat/lon and filter down to below selected radius
+  zipList <- dplyr::select(zipList, -refLat, -refLon) %>%
+    dplyr::filter(distance < radius)
+
+  return(zipList)
+  }
+```
+```{r, warning=FALSE}
+test <- zipRadius("30316", 10)
+head(test)
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
-
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
-
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
-
-## More Examples
-
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
-
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
-```
-
-Also a quote using `>`:
-
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
