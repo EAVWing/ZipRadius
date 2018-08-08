@@ -10,7 +10,7 @@ Description: This is a package for a simple script that will generate a data fra
     distance to the given zip code when given a starting zip code and a radius in miles.
 License: GPL (>= 2)
 Encoding: UTF-8
-LazyData: false
+LazyData: FALSE
 RoxygenNote: 6.1.0
 Suggests: knitr,
     rmarkdown
