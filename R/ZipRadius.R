@@ -79,8 +79,8 @@ getStates <- function(zipcode, radius){
 #'@export
 getZipPop <- function(zipcode, radius){
   data <- zipRadius(zipcode, radius)
-  zips <- suppressWarnings(dplyr::data_frame(region = data[,1]) %>%
-    dplyr::inner_join(df_pop_zip))
+  zips <- suppressWarnings(suppressMessages((dplyr::data_frame(region = data[,1]) %>%
+    dplyr::inner_join(df_pop_zip))))
   zips
   }
 
@@ -117,10 +117,11 @@ getZips <- function(zipcode, radius){
 #'@export
 makeZipMap <- function(zipcode, radius){
   choro = suppressWarnings(choroplethrZip::ZipChoropleth$new(getZipPop(zipcode, radius)))
-  choro$prepare_map()
+  suppressMessages(suppressWarnings(choro$prepare_map()))
   choro$legend = "Population"
   ec_zips = getZips(zipcode, radius)
   ec_df   = suppressWarnings(choro$choropleth.df[choro$choropleth.df$region %in% ec_zips,])
   ec_plot = choro$render_helper(ec_df, "", choro$theme_clean())
-  ec_plot + ggplot2::coord_map()
+
+ec_plot + ggplot2::coord_map()
 }
