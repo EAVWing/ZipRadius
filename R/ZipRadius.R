@@ -79,7 +79,48 @@ getStates <- function(zipcode, radius){
 #'@export
 getZipPop <- function(zipcode, radius){
   data <- zipRadius(zipcode, radius)
-  zips <- dplyr::data_frame(region = data[,1]) %>%
-    dplyr::inner_join(df_pop_zip)
+  zips <- suppressWarnings(dplyr::data_frame(region = data[,1]) %>%
+    dplyr::inner_join(df_pop_zip))
   zips
   }
+
+#' getZips returns the list of zip codes as a character vector which have zip codes which fall in a specified radius in lower case format for use in choroplethrZip
+#'
+#' @param zipcode the reference zip code of which you'd like the list of zip codes within a give radius as character
+#'
+#' @param radius the distance in miles from the center of the given zip to the center of the other zips as numeric
+#'
+#' @examples getZips("30316", 10)
+#'
+#'@export
+getZips <- function(zipcode, radius){
+  data <- zipRadius(zipcode, radius)
+  zips <- data$zip
+  zips
+}
+
+#' makeZipMap returns a map of the selected zip codes
+#'
+#' @import choroplethrZip
+#'
+#' @import ggplot2
+#'
+#' @param zipcode the reference zip code of which you'd like the list of zip codes within a give radius as character
+#'
+#' @param radius the distance in miles from the center of the given zip to the center of the other zips as numeric
+#'
+#' @examples
+#' \dontrun{
+#' makeZipMap("30316", 10)
+#' }
+#'
+#'@export
+makeZipMap <- function(zipcode, radius){
+  choro = suppressWarnings(choroplethrZip::ZipChoropleth$new(getZipPop(zipcode, radius)))
+  choro$prepare_map()
+  choro$legend = "Population"
+  ec_zips = getZips(zipcode, radius)
+  ec_df   = suppressWarnings(choro$choropleth.df[choro$choropleth.df$region %in% ec_zips,])
+  ec_plot = choro$render_helper(ec_df, "", choro$theme_clean())
+  ec_plot + ggplot2::coord_map()
+}
