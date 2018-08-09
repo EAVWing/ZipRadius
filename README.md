@@ -1,13 +1,6 @@
----
-title: ZipRadius [![Build Status](https://travis-ci.org/EAVWing/ZipRadius.svg?branch=master)](https://travis-ci.org/EAVWing/ZipRadius)
-author: "Stephen Ewing"
-date: "August 9, 2018"
-output: 
-  html_document: 
-    keep_md: yes
----
-
-
+# ZipRadius [![Build Status](https://travis-ci.org/EAVWing/ZipRadius.svg?branch=master)](https://travis-ci.org/EAVWing/ZipRadius)
+## Stephen Ewing (EAVWing)
+## August 9, 2018
 
 This package has been submitted to CRAN but is also available on my Github page:
 
