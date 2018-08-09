@@ -2,7 +2,10 @@
 ## Stephen Ewing (EAVWing)
 ## August 9, 2018
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> defea0d02c02e37254d22fc764510bde90cfb21d
 This package has been submitted to CRAN but is also available on my Github page:
 
 ```r
