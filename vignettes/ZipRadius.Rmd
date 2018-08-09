@@ -14,14 +14,57 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+library(ZipRadius)
 ```
 
-This package does one thing well.  If you give it a zip code and a radius in miles it returns a data frame containing all of the zip codes that have a center point within the distance specified by the radius.
+If you give it a zip code and a radius in miles it returns a data frame containing all of the zip codes that have a center point within the distance specified by the radius.
 
-For example:
+For example these are the 8 zipcodes within 3.5 miles of zip code 30316:
 
+```{r}
+test <- zipRadius("30316", 3.5)
+test
+```
+
+It also includes 3 functions which can be used with Ari Lamstein's choroplethrZip package.  choroplethrZip is too big to be supported by CRAN so if you want to use it you should install it with:
 ```{r, eval=FALSE}
-test <- zipRadius("30316", 10)
-head(test)
+library(devtools)
+install_github('arilamstein/choroplethrZip@v1.3.0')
 ```
 
+The get states function gives a character vetctor of the states in a zip radius.  Here are the states within 200 miles of 30316:
+```{r}
+getStates("30316", 200)
+```
+
+Sometimes you'll need a character vector of the zip codes instead of a data frame:
+```{r}
+getZips("30316", 3.5)
+```
+
+You also could want a data frame that includes just the zip codes as region and the population for those zip codes.  This uses an innerjoin with the population data frame from choroplethrZip so any zip codes that don't appear in both our zip list used for distance measurements and their zip list with populations are dropped.  You'll see this now returns 6 zip codes vs. the 8 returned with the zipRadius function.
+```{r}
+getZipPop("30316", 3.5)
+```
+
+Finally, here's an example of making a choroplethr of the zip codes in the radius.  I haven't included this function in the package because I can't import choroplethrZip into the package due to its size.
+```{r, cache=TRUE, eval=FALSE}
+library(ZipRadius)
+library(choroplethrZip)
+library(ggplot2)
+
+makeZipMap <- function(zipcode, radius){
+  choro = choroplethrZip::ZipChoropleth$new(getZipPop(zipcode, radius))
+  suppressMessages(suppressWarnings(choro$prepare_map()))
+  choro$legend = "Population"
+  ec_zips = getZips(zipcode, radius)
+  ec_df   = choro$choropleth.df[choro$choropleth.df$region %in% ec_zips,]
+  ec_plot = choro$render_helper(ec_df, "", choro$theme_clean())
+
+  ec_plot + ggplot2::coord_map()
+}
+makeZipMap("30316", 500)
+```
+```{r pressure, echo=FALSE, out.width = '100%'}
+knitr::include_graphics("500miFrom30316.png")
+```
