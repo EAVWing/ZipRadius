@@ -17,6 +17,12 @@ knitr::opts_chunk$set(
 library(ZipRadius)
 ```
 
+This package has been submitted to CRAN but is also available on my Github page:
+```{r, eval=FALSE}
+library(devtools)
+install_github('EAVWing/ZipRadius')
+```
+
 If you give it a zip code and a radius in miles it returns a data frame containing all of the zip codes that have a center point within the distance specified by the radius.
 
 For example these are the 8 zipcodes within 3.5 miles of zip code 30316:
