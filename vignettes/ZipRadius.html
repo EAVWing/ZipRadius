@@ -12,7 +12,7 @@
 
 <meta name="author" content="Stephen Ewing" />
 
-<meta name="date" content="2018-08-09" />
+<meta name="date" content="2018-08-11" />
 
 <title>Zip Radius Package</title>
 
@@ -70,11 +70,14 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Zip Radius Package</h1>
 <h4 class="author"><em>Stephen Ewing</em></h4>
-<h4 class="date"><em>2018-08-09</em></h4>
+<h4 class="date"><em>2018-08-11</em></h4>
 
 
 
-<p>If you give it a zip code and a radius in miles it returns a data frame containing all of the zip codes that have a center point within the distance specified by the radius.</p>
+<p>This package has been submitted to CRAN but is also available on my Github page:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(devtools)
+<span class="kw">install_github</span>(<span class="st">'EAVWing/ZipRadius'</span>)</code></pre></div>
+<p>If you give it a US zip code and a radius in miles it returns a data frame containing all of the US zip codes that have a center point within the distance specified by the radius.</p>
 <p>For example these are the 8 zipcodes within 3.5 miles of zip code 30316:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">test &lt;-<span class="st"> </span><span class="kw">zipRadius</span>(<span class="st">&quot;30316&quot;</span>, <span class="fl">3.5</span>)
 test

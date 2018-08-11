@@ -5,6 +5,10 @@ knitr::opts_chunk$set(
 )
 library(ZipRadius)
 
+## ---- eval=FALSE---------------------------------------------------------
+#  library(devtools)
+#  install_github('EAVWing/ZipRadius')
+
 ## ------------------------------------------------------------------------
 test <- zipRadius("30316", 3.5)
 test
