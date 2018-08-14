@@ -53,7 +53,7 @@ You also could want a data frame that includes just the zip codes as region and 
 getZipPop("30316", 3.5)
 ```
 
-Finally, here's an example of making a choroplethr of the zip codes in the radius.  I haven't included this function in the package because I can't import choroplethrZip into the package due to its size.
+Finally, here's an example of making a choroplethr of the zip codes in the radius.  I haven't included this function in the package because I can't import 'choroplethrZip' into the package due to its size.
 ```{r, eval=FALSE}
 library(ZipRadius)
 library(choroplethrZip)
