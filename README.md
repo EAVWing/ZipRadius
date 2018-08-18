@@ -1,14 +1,6 @@
 # ZipRadius [![Build Status](https://travis-ci.org/EAVWing/ZipRadius.svg?branch=master)](https://travis-ci.org/EAVWing/ZipRadius)     [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/ZipRadius)](https://cran.r-project.org/package=ZipRadius)
 
 ## Stephen Ewing (EAVWing)
-## August 9, 2018
-
-This package has been submitted to CRAN but is also available on my Github page:
-
-```r
-library(devtools)
-install_github('EAVWing/ZipRadius')
-```
 
 If you give it a zip code and a radius in miles it returns a data frame containing all of the zip codes that have a center point within the distance specified by the radius.
 
