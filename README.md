@@ -1,4 +1,4 @@
-# ZipRadius [![Build Status](https://travis-ci.org/EAVWing/ZipRadius.svg?branch=master)](https://travis-ci.org/EAVWing/ZipRadius)
+# ZipRadius [![Build Status](https://travis-ci.org/EAVWing/ZipRadius.svg?branch=master)](https://travis-ci.org/EAVWing/ZipRadius)https://www.r-pkg.org/badges/version/ZipRadius
 ## Stephen Ewing (EAVWing)
 ## August 9, 2018
 
