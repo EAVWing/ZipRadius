@@ -116,3 +116,26 @@ getZips <- function(zipcode, radius){
   zips
 }
 
+#' Lookup zip code location
+#'
+#' Get the city, state, latitude and longitude of zip codes
+#' @param zipcodes A character vector of five digit zip codes
+#' @return A data frame with five columns and as many rows as
+#' the length of the \code{zipcodes} argument.
+#' \describe{
+#' \item{zip}{Character. The zip codes you passed to the function.}
+#' \item{city}{Character. The cities containing the zip codes.}
+#' \item{state}{Character. The states containing the zip codes.}
+#' \item{latitude}{Numeric. The latitudes of the centers of the zip codes.}
+#' \item{longitude}{Numeric. The longitudes of the centers of the zip codes.}
+#' }
+#' @examples
+#' zipcodes <- c("99501", "90210", "33162", "60606", "42748", "99999")
+#' lookupZips(zipcodes)
+#' @importFrom tibble tibble
+#' @importFrom dplyr filter
+#' @export
+lookupZips <- function(zipcodes) {
+  tibble::tibble(zip = zipcodes) %>%
+    dplyr::left_join(zipList, by = "zip")
+}

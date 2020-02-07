@@ -3,6 +3,7 @@
 export(getStates)
 export(getZipPop)
 export(getZips)
+export(lookupZips)
 export(zipRadius)
 importFrom(dplyr,"%>%")
 importFrom(dplyr,filter)
