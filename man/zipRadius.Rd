@@ -30,5 +30,9 @@ reference zip code to the center of the zip code in that row.}
 Find all zip codes within a radius of a specified zip code.
 }
 \examples{
+# A real zip code
 zipRadius("30316", 10)
+
+# A made up zip code
+zipRadius("99999", 10)
 }

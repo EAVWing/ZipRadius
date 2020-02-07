@@ -17,39 +17,46 @@
 #' reference zip code to the center of the zip code in that row.}
 #' }
 #' @examples
+#' # A real zip code
 #' zipRadius("30316", 10)
+#'
+#' # A made up zip code
+#' zipRadius("99999", 10)
 #' @importFrom magrittr %>%
 #' @importFrom geosphere distHaversine
-#' @importFrom dplyr filter select rename %>%
-#' @importFrom utils zip
+#' @importFrom dplyr filter select mutate
 #' @importFrom rlang .data
+#' @importFrom assertive.types assert_is_a_string assert_is_a_number
 #'@export
-zipRadius <- function(zipcode, radius){
+zipRadius <- function(zipcode, radius) {
+  assertive.types::assert_is_a_string(zipcode)
+  assertive.types::assert_is_a_number(radius)
+
   # Get the lat/lon of the reference zip
   refPoint <- dplyr::filter(zipList, .data$zip == zipcode) %>%
-    dplyr::select(.data$latitude, .data$longitude) %>%
-    dplyr::rename(refLat = .data$latitude, refLon = .data$longitude)
-
-  # Add the lat/lon of the ref zip to the zipList
-  zipList <- cbind(zipList, refPoint)
-
-  # Radius of Earth in miles to adjust for km
-  r = 3959
-
-  # Creating Table of the coordinates. Makes it easy to calc distance
-  Points1 <- cbind(zipList$longitude,zipList$latitude)
-  Points2 <- cbind(zipList$refLon,zipList$refLat)
-  distance <- distHaversine(Points1,Points2,r)
-
-  # Adding distance back on to the original zipList
-  zipList$Distance <- round(distance, 2)
-
-  # Remove reference lat/lon and filter down to below selected radius
-  zipList <- dplyr::select(zipList, -.data$refLat, -.data$refLon) %>%
-    dplyr::filter(.data$Distance < radius)
-
-  return(zipList)
+    dplyr::select(refLon = .data$longitude, refLat = .data$latitude)
+  if(nrow(refPoint) == 0) {
+    warning("The zipcode you specified wasn't found.")
+    bad_data <- tibble::tibble(
+      zip = character(),
+      city = character(), state = character(),
+      latitude = character(), longitude = character(),
+      Distance = numeric()
+    )
+    return(bad_data)
   }
+
+  # Calculate distance from reference zip to others
+  radius_earth_miles <- 3959
+  new_zip_points <- zipList %>%
+    select(.data$longitude, .data$latitude)
+  distance <- geosphere::distHaversine(refPoint, new_zip_points, radius_earth_miles)
+
+  zipList %>%
+    dplyr::mutate(Distance = round(!!distance, 2)) %>%
+    # Filter using unrounded distances
+    dplyr::filter(!!distance < radius)
+}
 
 #' Get the US states near to a zip code
 #'
