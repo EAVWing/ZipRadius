@@ -82,19 +82,21 @@ getStates <- function(zipcode, radius){
 #' @return A data frame with two columns.
 #' the length of the \code{zipcodes} argument.
 #' \describe{
-#' \item{region}{Character. A zip code nearby to the reference zip code.}
-#' \item{value}{Numeric. The population of that zip code.}
+#' \item{zip}{Character. A zip code nearby to the reference zip code.}
+#' \item{population}{Numeric. The population of that zip code.}
 #' }
 #' @examples
 #' getZipPop("30316", 10)
-#' @importFrom tibble tibble
+#' @importFrom dplyr select
 #' @importFrom dplyr inner_join
+#' @importFrom dplyr rename
 #' @export
 getZipPop <- function(zipcode, radius){
   data <- zipRadius(zipcode, radius)
-  zips <- suppressWarnings(suppressMessages((tibble::tibble(region = data[,1]) %>%
-    dplyr::inner_join(df_pop_zip))))
-  zips
+  data %>%
+    dplyr::select(.data$zip) %>%
+    dplyr::inner_join(df_pop_zip, by = c("zip" = "region")) %>%
+    dplyr::rename(population = value)
 }
 
 #' Get nearby zip codes

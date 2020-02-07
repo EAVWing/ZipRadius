@@ -17,8 +17,8 @@ center of the other zips as numeric.}
 A data frame with two columns.
 the length of the \code{zipcodes} argument.
 \describe{
-\item{region}{Character. A zip code nearby to the reference zip code.}
-\item{value}{Numeric. The population of that zip code.}
+\item{zip}{Character. A zip code nearby to the reference zip code.}
+\item{population}{Numeric. The population of that zip code.}
 }
 }
 \description{
