@@ -1,8 +1,3 @@
-library(geosphere)
-library(magrittr)
-library(dplyr)
-library(rlang)
-
 #' The zipRadius Function
 #'
 #' @import magrittr
