@@ -2,19 +2,25 @@
 % Please edit documentation in R/ZipRadius.R
 \name{getZips}
 \alias{getZips}
-\title{getZips returns the list of zip codes as a character vector which have zip codes which fall in a specified radius in lower case format for use in choroplethrZip}
+\title{Get nearby zip codes}
 \usage{
 getZips(zipcode, radius)
 }
 \arguments{
-\item{zipcode}{the reference zip code of which you'd like the list of zip codes within a give radius as character}
+\item{zipcode}{The reference zip code of which you'd like the list of zip
+codes within a give radius as character.}
 
-\item{radius}{the distance in miles from the center of the given zip to the center of the other zips as numeric}
+\item{radius}{The distance in miles from the center of the given zip to the
+center of the other zips as numeric.}
+}
+\value{
+A character vector of zip codes.
 }
 \description{
-getZips returns the list of zip codes as a character vector which have zip codes which fall in a specified radius in lower case format for use in choroplethrZip
+\code{getZips} returns the list of zip codes as a character vector which have
+zip codes which fall in a specified radius in lower case format for use in
+\code{choroplethrZip}.
 }
 \examples{
 getZips("30316", 10)
-
 }

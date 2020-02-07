@@ -2,19 +2,24 @@
 % Please edit documentation in R/ZipRadius.R
 \name{getStates}
 \alias{getStates}
-\title{getStates returns the list of states which have zip codes which fall in a specified radius in lower case format for use in choroplethrZip}
+\title{Get the US states near to a zip code}
 \usage{
 getStates(zipcode, radius)
 }
 \arguments{
-\item{zipcode}{the reference zip code of which you'd like the list of zip codes within a give radius as character}
+\item{zipcode}{The reference zip code of which you'd like the list of zip
+codes within a give radius as character.}
 
-\item{radius}{the distance in miles from the center of the given zip to the center of the other zips as numeric}
+\item{radius}{The distance in miles from the center of the given zip to the
+center of the other zips as numeric.}
+}
+\value{
+A character vector of US state names, in lower case.
 }
 \description{
-getStates returns the list of states which have zip codes which fall in a specified radius in lower case format for use in choroplethrZip
+\code{getStates} returns the list of states which have zip codes that fall
+in a specified radius in lower case format for use in \code{choroplethrZip}.
 }
 \examples{
-getStates("30316", 10)
-
+getStates("30316", 100)
 }

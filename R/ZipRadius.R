@@ -1,21 +1,28 @@
 #' The zipRadius Function
 #'
-#' @import magrittr
-#'
+#' Find all zip codes within a radius of a specified zip code.
+#' @param zipcode The reference zip code of which you'd like the list of zip
+#' codes within a give radius as a character vector of length one.
+#' @param radius The distance in miles from the center of the given zip to the
+#' center of the other zips as numeric.
+#' @return A data frame with six columns.
+#' the length of the \code{zipcodes} argument.
+#' \describe{
+#' \item{zip}{Character. A zip code nearby to the reference zip code.}
+#' \item{city}{Character. The cities containing the zip codes.}
+#' \item{state}{Character. The states containing the zip codes.}
+#' \item{latitude}{Numeric. The latitudes of the centers of the zip codes.}
+#' \item{longitude}{Numeric. The longitudes of the centers of the zip codes.}
+#' \item{Distance}{Numeric. The distance in miles from the center of the
+#' reference zip code to the center of the zip code in that row.}
+#' }
+#' @examples
+#' zipRadius("30316", 10)
+#' @importFrom magrittr %>%
 #' @importFrom geosphere distHaversine
-#'
 #' @importFrom dplyr filter select rename %>%
-#'
 #' @importFrom utils zip
-#'
 #' @importFrom rlang .data
-#'
-#' @param zipcode the reference zip code of which you'd like the list of zip codes within a give radius as character
-#'
-#' @param radius the distance in miles from the center of the given zip to the center of the other zips as numeric
-#'
-#' @examples zipRadius("30316", 10)
-#'
 #'@export
 zipRadius <- function(zipcode, radius){
   # Get the lat/lon of the reference zip
@@ -44,15 +51,18 @@ zipRadius <- function(zipcode, radius){
   return(zipList)
   }
 
-#' getStates returns the list of states which have zip codes which fall in a specified radius in lower case format for use in choroplethrZip
+#' Get the US states near to a zip code
 #'
-#' @param zipcode the reference zip code of which you'd like the list of zip codes within a give radius as character
-#'
-#' @param radius the distance in miles from the center of the given zip to the center of the other zips as numeric
-#'
-#' @examples getStates("30316", 10)
-#'
-#'@export
+#' \code{getStates} returns the list of states which have zip codes that fall
+#' in a specified radius in lower case format for use in \code{choroplethrZip}.
+#' @param zipcode The reference zip code of which you'd like the list of zip
+#' codes within a give radius as character.
+#' @param radius The distance in miles from the center of the given zip to the
+#' center of the other zips as numeric.
+#' @return A character vector of US state names, in lower case.
+#' @examples
+#' getStates("30316", 100)
+#' @export
 getStates <- function(zipcode, radius){
   data <- zipRadius(zipcode, radius)
   stateTable <- as.data.frame(cbind(datasets::state.abb, tolower(datasets::state.name)))
@@ -61,32 +71,44 @@ getStates <- function(zipcode, radius){
   States
 }
 
-#' getZipPop returns a data frame of zipcodes and their population where the zip codes fall within a given radius for use in choroplethrZip
+#' get the population living near a zip code
 #'
-#' @importFrom dplyr data_frame inner_join
-#'
-#' @param zipcode the reference zip code of which you'd like the list of zip codes within a give radius as character
-#'
-#' @param radius the distance in miles from the center of the given zip to the center of the other zips as numeric
-#'
-#' @examples getStates("30316", 10)
-#'
-#'@export
+#' \code{getZipPop} returns a data frame of zip codes and their population where
+#'  the zip codes fall within a given radius for use in \code{choroplethrZip}.
+#' @param zipcode The reference zip code of which you'd like the list of zip
+#' codes within a give radius as character.
+#' @param radius The distance in miles from the center of the given zip to the
+#' center of the other zips as numeric.
+#' @return A data frame with two columns.
+#' the length of the \code{zipcodes} argument.
+#' \describe{
+#' \item{region}{Character. A zip code nearby to the reference zip code.}
+#' \item{value}{Numeric. The population of that zip code.}
+#' }
+#' @examples
+#' getZipPop("30316", 10)
+#' @importFrom tibble tibble
+#' @importFrom dplyr inner_join
+#' @export
 getZipPop <- function(zipcode, radius){
   data <- zipRadius(zipcode, radius)
-  zips <- suppressWarnings(suppressMessages((dplyr::data_frame(region = data[,1]) %>%
+  zips <- suppressWarnings(suppressMessages((tibble::tibble(region = data[,1]) %>%
     dplyr::inner_join(df_pop_zip))))
   zips
-  }
+}
 
-#' getZips returns the list of zip codes as a character vector which have zip codes which fall in a specified radius in lower case format for use in choroplethrZip
+#' Get nearby zip codes
 #'
-#' @param zipcode the reference zip code of which you'd like the list of zip codes within a give radius as character
-#'
-#' @param radius the distance in miles from the center of the given zip to the center of the other zips as numeric
-#'
-#' @examples getZips("30316", 10)
-#'
+#' \code{getZips} returns the list of zip codes as a character vector which have
+#' zip codes which fall in a specified radius in lower case format for use in
+#' \code{choroplethrZip}.
+#' @param zipcode The reference zip code of which you'd like the list of zip
+#' codes within a give radius as character.
+#' @param radius The distance in miles from the center of the given zip to the
+#' center of the other zips as numeric.
+#' @return A character vector of zip codes.
+#' @examples
+#' getZips("30316", 10)
 #'@export
 getZips <- function(zipcode, radius){
   data <- zipRadius(zipcode, radius)

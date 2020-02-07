@@ -7,14 +7,28 @@
 zipRadius(zipcode, radius)
 }
 \arguments{
-\item{zipcode}{the reference zip code of which you'd like the list of zip codes within a give radius as character}
+\item{zipcode}{The reference zip code of which you'd like the list of zip
+codes within a give radius as a character vector of length one.}
 
-\item{radius}{the distance in miles from the center of the given zip to the center of the other zips as numeric}
+\item{radius}{The distance in miles from the center of the given zip to the
+center of the other zips as numeric.}
+}
+\value{
+A data frame with six columns.
+the length of the \code{zipcodes} argument.
+\describe{
+\item{zip}{Character. A zip code nearby to the reference zip code.}
+\item{city}{Character. The cities containing the zip codes.}
+\item{state}{Character. The states containing the zip codes.}
+\item{latitude}{Numeric. The latitudes of the centers of the zip codes.}
+\item{longitude}{Numeric. The longitudes of the centers of the zip codes.}
+\item{Distance}{Numeric. The distance in miles from the center of the
+reference zip code to the center of the zip code in that row.}
+}
 }
 \description{
-The zipRadius Function
+Find all zip codes within a radius of a specified zip code.
 }
 \examples{
 zipRadius("30316", 10)
-
 }
