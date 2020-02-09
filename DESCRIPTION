@@ -1,18 +1,27 @@
 Package: ZipRadius
 Type: Package
 Title: Creates a Data Frame of US Zip Codes in a Given Radius from a Given US Zip Code
-Version: 1.0.1
+Version: 1.1.0
 Depends: R (>= 2.10)
 Author: Stephen Ewing <stephenewing1337@gmail.com>
 Maintainer: Stephen Ewing <stephenewing1337@gmail.com>
-Imports: dplyr, geosphere, magrittr, testthat, rlang, ggplot2
+Imports: 
+    assertive.types,
+    datasets,
+    dplyr, 
+    geosphere, 
+    ggplot2, 
+    magrittr, 
+    rlang, 
+    testthat,
+    tibble
 Description: Generates a data frame of US zip codes and their distance to the given zip code when given a starting 
   zip code and a radius in miles. Also includes functions for use with 'choroplethrZip' which are detailed in
   the vignette.
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: FALSE
-RoxygenNote: 6.1.0
+RoxygenNote: 7.0.2
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr

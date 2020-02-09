@@ -1,0 +1,7 @@
+## 1.1.0
+
+- `lookupZips()` returns state, latitude, and longitude information for US zip codes. (#1)
+- The `zipList` dataset is now exported.
+- When multiple zip codes are passed to `zipRadius()`, the error message is clearer.
+- When a nonexistent zip code is passed to `zipRadius()`, an empty data frame is returned with a warning.
+- The column names in the return value of `getZipPops()` are now `zip` and `population` (changed from `region` and `value`).
