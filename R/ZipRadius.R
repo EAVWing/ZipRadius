@@ -100,6 +100,7 @@ getStates <- function(zipcode, radius){
 #' @export
 getZipPop <- function(zipcode, radius){
   data <- zipRadius(zipcode, radius)
+  data(df_pop_zip)
   data %>%
     dplyr::select(.data$zip) %>%
     dplyr::inner_join(df_pop_zip, by = c("zip" = "region")) %>%

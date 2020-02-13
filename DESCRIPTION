@@ -1,7 +1,7 @@
 Package: ZipRadius
 Type: Package
 Title: Creates a Data Frame of US Zip Codes in a Given Radius from a Given US Zip Code
-Version: 1.1.0
+Version: 1.2.0
 Depends: R (>= 2.10)
 Author: Stephen Ewing <stephenewing1337@gmail.com>
 Maintainer: Stephen Ewing <stephenewing1337@gmail.com>
